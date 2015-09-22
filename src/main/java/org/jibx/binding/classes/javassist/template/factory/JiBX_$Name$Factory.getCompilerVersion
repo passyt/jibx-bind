@@ -1,0 +1,3 @@
+public String getCompilerDistribution(){
+    return "jibx_1_2_3_Derby";
+}

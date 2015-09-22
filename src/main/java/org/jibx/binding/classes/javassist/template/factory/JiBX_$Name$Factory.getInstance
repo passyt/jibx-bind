@@ -1,0 +1,5 @@
+public static IBindingFactory getInstance(){
+    if(m_inst == null)
+        m_inst = new $factoryClassName$();
+    return m_inst;
+}

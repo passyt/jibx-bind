@@ -1,0 +1,3 @@
+public static String serialize(float object) {
+	return serialize(Float.valueOf(object));
+}

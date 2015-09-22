@@ -1,0 +1,20 @@
+<binding name="message">
+
+	<namespace uri="http://test/" default="elements" />
+	<namespace uri="http://www/" prefix="b" />
+	
+	<mapping abstract="true" class="org.jibx.binding.test1.Mapping">
+		<value name="Version" field="version" usage="optional" />
+	</mapping>
+
+	<mapping name="Test" class="org.jibx.binding.test1.TestMapping" ns="http://test.1/">
+		<namespace uri="http://test.1/" prefix="a" />
+		<structure map-as="org.jibx.binding.test1.Mapping" />
+		<value name="Name" field="name" usage="optional" style="attribute" />
+		<structure name="Code">
+			<value name="Age" field="age" usage="optional" style="attribute" />
+			<value name="Value" field="value" usage="optional" />
+		</structure>
+	</mapping>
+
+</binding>

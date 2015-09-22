@@ -1,0 +1,90 @@
+package $Package$;
+
+import org.jibx.runtime.IBindingFactory;
+import org.jibx.runtime.impl.BindingFactoryBase;
+
+/**
+ * 
+ * @author Passyt
+ *
+ */
+public class JiBX_$Name$Factory extends BindingFactoryBase implements IBindingFactory{
+
+	/**
+     * Constructor used in generated binding factories.
+     * 
+     * @param name binding name
+     * @param majorver binding major version number
+     * @param minorver binding minor version number
+     * @param boundnames blob of class names with code for this binding
+     * @param mappednames blob of class or type names for mappings
+     * @param umarnames unmarshaller class names blob (<code>null</code> if
+     * output-only binding)
+     * @param marnames marshaller class names blob (<code>null</code> if
+     * input-only binding)
+     * @param uris namespace URIs used by binding
+     * @param prefixes namespace prefixes used by binding (<code>null</code>
+     * if input-only binding)
+     * @param gmapnames globally-mapped element names blob
+     * @param gmapuris globally-mapped element namespaces blob
+     * @param idclasses names of classes with IDs
+     * @param abmapdetails abstract mapping details blob
+     * @param abmapnss abstract mapping namespace indexes blob
+     * @param prenames precompiled base binding names blob
+     * @param prefacts base binding factory classes blob
+     * @param prehashes base binding hashes blob
+     * @param prensmaps namespace index mapping tables blobs for precompiled
+     * bindings
+     */
+    private JiBX_touricoFactory(){
+        super(
+        	"$Name$", 
+        	0, 
+        	0, 
+        	getClassList(), 
+        	"com.derby.nuke.common.ws.soap.SoapEnvelope|......Soap11Fault|...adapter.tourico.model.common.Message|......Request|......Response|......common.Account|......GetAvailabilityRequest|......common.RoomGuest|......GetAvailabilityResponse|......common.Supplement|......BookReservationRequest|......common.CreditCard|......BookReservationResponse|......common.Reservation|.......CancelAccount|......CancelReservationRequest|......CancelReservationResponse|......GetCancelPolicyRequest|......GetCancelPolicyResponse", 
+        	"com.derby.nuke.common.ws.soap.JiBX_soap11SoapEnvelope_access|......JiBX_soap11Soap11Fault_access||||...adapter.tourico.model.common.JiBX_touricoAccount_access|......JiBX_touricoGetAvailabilityRequest_access|......common.JiBX_touricoRoomGuest_access|......JiBX_touricoGetAvailabilityResponse_access|......common.JiBX_touricoSupplement_access|......JiBX_touricoBookReservationRequest_access|......common.JiBX_touricoCreditCard_access|......JiBX_touricoBookReservationResponse_access|......common.JiBX_touricoReservation_access|.......JiBX_touricoCancelAccount_access|......JiBX_touricoCancelReservationRequest_access|......JiBX_touricoCancelReservationResponse_access|......JiBX_touricoGetCancelPolicyRequest_access|......JiBX_touricoGetCancelPolicyResponse_access", 
+        	"com.derby.nuke.common.ws.soap.JiBX_soap11SoapEnvelope_access|......JiBX_soap11Soap11Fault_access||||...adapter.tourico.model.common.JiBX_touricoAccount_access|......JiBX_touricoGetAvailabilityRequest_access|......common.JiBX_touricoRoomGuest_access|......JiBX_touricoGetAvailabilityResponse_access|......common.JiBX_touricoSupplement_access|......JiBX_touricoBookReservationRequest_access|......common.JiBX_touricoCreditCard_access|......JiBX_touricoBookReservationResponse_access|......common.JiBX_touricoReservation_access|.......JiBX_touricoCancelAccount_access|......JiBX_touricoCancelReservationRequest_access|......JiBX_touricoCancelReservationResponse_access|......JiBX_touricoGetCancelPolicyRequest_access|......JiBX_touricoGetCancelPolicyResponse_access", 
+        	new String[] {
+	            "", "http://www.w3.org/XML/1998/namespace", "http://www.w3.org/2001/XMLSchema-instance", "http://schemas.xmlsoap.org/soap/envelope/", "http://tourico.com/webservices/hotelv3", "http://schemas.tourico.com/webservices/hotelv3", "http://schemas.tourico.com/webservices/authentication", "http://tourico.com/travelservices/", "http://tourico.com/webservices/", "http://tourico.com/webservices/TWS_ClxPolicies.xsd"
+	        }, 
+	        new String[] {
+	            "", "xml", "xsi", "soap", "m", null, "aut", "trav", "web", null
+	        }, 
+	        "Envelope|Fault||||AuthenticationHeader|CheckAvailabilityAndPrices|RoomInfo|CheckAvailabilityAndPricesResponse|Supplement|BookHotelV3|CCI|BookHotelV3Response|Reservation|LoginHeader|CancelReservation|CancelReservationResponse|GetCancellationPolicies|GetCancellationPoliciesResponse", 
+	        "\005\005\001\001\001\b\006\007\006\007\006\007\006\007\n\n\n\n\n", 
+	        null, 
+	        "com.derby.nuke.adapter.tourico.model.common.Message|.......|.......Message.JiBX_tourico_newinstance_2_0||||||........JiBX_tourico_test_2_0|........JiBX_tourico_unmarshal_2_0|........JiBX_tourico_marshal_2_0|......Request|......|......Request.JiBX_tourico_newinstance_3_0||||||.......JiBX_tourico_test_3_0|.......JiBX_tourico_unmarshal_3_0|.......JiBX_tourico_marshal_3_0|......Response|......|......Response.JiBX_tourico_newinstance_3_0||||||.......JiBX_tourico_test_3_0|.......JiBX_tourico_unmarshal_3_0|.......JiBX_tourico_marshal_3_0", 
+	        "\003\005\006\003\005\006\003\005\006", 
+	        "soap11", 
+	        "com.derby.nuke.common.ws.soap.JiBX_soap11Factory", 
+	        "\u24EB\uE521", 
+	        new String[1]
+	    );
+    }
+
+    public int getCompilerVersion(){
+        return 0x00030000;
+    }
+
+    public String getCompilerDistribution(){
+        return "jibx_1_2_3_Derby";
+    }
+
+	//TODO how to handle type index @see org.jibx.binding.def.BindingDefinition#1379
+    public int getTypeIndex(String arg1){
+        return -1;
+    }
+
+    public static IBindingFactory getInstance(){
+        if(m_inst == null)
+            m_inst = new JiBX_touricoFactory();
+        return m_inst;
+    }
+
+    private static String getClassList(){
+        return "com.derby.nuke.adapter.tourico.model.BookReservationRequest|......BookReservationResponse|......CancelReservationRequest|......CancelReservationResponse|......GetAvailabilityRequest|......GetAvailabilityResponse|......GetCancelPolicyRequest|......GetCancelPolicyResponse|......JiBX_touricoBookReservationRequest_access|......JiBX_touricoBookReservationResponse_access|......JiBX_touricoCancelReservationRequest_access|......JiBX_touricoCancelReservationResponse_access|......JiBX_touricoFactory|......JiBX_touricoGetAvailabilityRequest_access|......JiBX_touricoGetAvailabilityResponse_access|......JiBX_touricoGetCancelPolicyRequest_access|......JiBX_touricoGetCancelPolicyResponse_access|......JiBX_touricoMungeAdapter|......Request|......Response|......common.Account|.......AvailableEntry|.......CancelAccount|.......CancelPenalty|.......ContactInfo|.......CreditCard|.......DailyRateEntry|.......Deadline|.......Discount|.......JiBX_touricoAccount_access|.......JiBX_touricoCancelAccount_access|.......JiBX_touricoCreditCard_access|.......JiBX_touricoReservation_access|.......JiBX_touricoRoomGuest_access|.......JiBX_touricoSupplement_access|.......Message|.......OccupancyRate|.......Passenger|.......ProductInfo|.......Reservation|.......ReservationRoomInfo|.......RoomGuest|.......RoomRate|.......SuppAge|.......Supplement";
+    }
+
+    private static IBindingFactory m_inst;
+}

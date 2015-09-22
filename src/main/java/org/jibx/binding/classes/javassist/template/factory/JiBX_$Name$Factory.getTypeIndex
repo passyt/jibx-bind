@@ -1,0 +1,4 @@
+//TODO how to handle type index @see org.jibx.binding.def.BindingDefinition#1379
+public int getTypeIndex(String arg1){
+    return -1;
+}

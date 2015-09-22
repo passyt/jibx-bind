@@ -1,0 +1,6 @@
+public static $className$ $unmarshalMethodName$($className$ object, org.jibx.runtime.impl.UnmarshallingContext context) throws JiBXException {
+    context.pushTrackedObject(object);
+    $CodeBody$
+    context.popObject();
+    return object;
+}

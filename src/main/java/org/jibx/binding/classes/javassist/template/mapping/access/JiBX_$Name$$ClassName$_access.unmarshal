@@ -1,0 +1,3 @@
+public final Object unmarshal(Object object, org.jibx.runtime.IUnmarshallingContext context) throws JiBXException{
+    $CodeBody$
+}

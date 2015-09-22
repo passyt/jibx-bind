@@ -1,0 +1,6 @@
+public static $className$ $newinstanceMethodName$($className$ object, org.jibx.runtime.IUnmarshallingContext context) throws JiBXException{
+    if(object == null) {
+        object = new $className$();
+    }
+    return object;
+}

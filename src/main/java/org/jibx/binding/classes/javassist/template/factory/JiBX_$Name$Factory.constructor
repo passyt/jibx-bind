@@ -1,0 +1,22 @@
+private JiBX_$name$Factory(){
+    super(
+    	"$name$", 
+    	0, 
+    	0, 
+    	getClassList(), 
+    	$mappednames$, 
+    	$umarnames$, 
+    	$marnames$, 
+    	$uris$, 
+        $prefixes$, 
+        $gmapnames$, 
+        combine($gmapuris$, 2), 
+        null, 
+        $abmapdetails$, 
+        combine($abmapnss$, 0), 
+        $prenames$, 
+        $prefacts$, 
+        $prehashes$, 
+        $prensmaps$
+    );
+}

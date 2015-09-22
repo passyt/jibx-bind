@@ -1,0 +1,3 @@
+if($constantVariable$ != null && !"$constant$".equals($constantVariable$)) {
+	throw new IllegalArgumentException("Expected constant value \"$constant$\", found \""+$constantVariable$+"\"");
+}

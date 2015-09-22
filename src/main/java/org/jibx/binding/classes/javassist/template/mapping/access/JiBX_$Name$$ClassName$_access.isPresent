@@ -1,0 +1,3 @@
+public final boolean isPresent(IUnmarshallingContext context) throws JiBXException{
+    return context.isAt($uri$, $elementName$);
+}

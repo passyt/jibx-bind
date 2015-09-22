@@ -1,0 +1,3 @@
+public final boolean isExtension(String className){
+	return className.equals("$className$");
+}

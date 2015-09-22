@@ -41,3 +41,12 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.classpath
+.project
+.svn
+.settings
+bin
+doc
+module
+lib.properties
+build.xml

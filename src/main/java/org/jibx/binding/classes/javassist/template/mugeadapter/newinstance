@@ -1,0 +1,22 @@
+public static Object newInstance(String type) {
+	try {
+		Class clazz = Class.forName(type);
+		if (java.util.List.class.isAssignableFrom(clazz)) {
+			return new java.util.ArrayList();
+		} else if (java.util.Set.class.isAssignableFrom(clazz)) {
+			return new java.util.HashSet();
+		} else if (java.util.Collection.class.isAssignableFrom(clazz)) {
+			return new java.util.ArrayList();
+		} else if (java.util.Map.class.isAssignableFrom(clazz)) {
+			return new java.util.HashMap();
+		} else if (clazz.isArray()) {
+			return java.lang.reflect.Array.newInstance(clazz.getComponentType(), 10);
+		}
+
+		return clazz.newInstance();
+	} catch (java.lang.ClassNotFoundException e) {
+		throw new java.lang.IllegalStateException("newInstatnce failed on type " + type, e);
+	} catch (Exception e) {
+		return null;
+	}
+}

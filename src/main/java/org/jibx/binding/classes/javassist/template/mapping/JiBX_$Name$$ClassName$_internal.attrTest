@@ -1,0 +1,3 @@
+public static boolean $attrTestMethodName$(org.jibx.runtime.impl.UnmarshallingContext context) throws JiBXException {
+    return $CodeBody$;
+}

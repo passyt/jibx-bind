@@ -1,0 +1,3 @@
+public void marshal(IMarshallingContext context) throws JiBXException {
+    context.getMarshaller("$className$").marshal(this, context);
+}

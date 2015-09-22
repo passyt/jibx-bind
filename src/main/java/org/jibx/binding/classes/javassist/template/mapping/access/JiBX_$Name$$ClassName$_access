@@ -1,0 +1,58 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   
+
+package com.derby.dswitch.adapter.ihg.model.common;
+
+import org.jibx.runtime.*;
+import org.jibx.runtime.impl.MarshallingContext;
+import org.jibx.runtime.impl.UnmarshallingContext;
+
+// Referenced classes of package com.derby.dswitch.adapter.ihg.model.common:
+//            TimeSpan
+
+public class JiBX_messageTimeSpan_access
+    implements IUnmarshaller, IMarshaller
+{
+
+    public JiBX_messageTimeSpan_access()
+    {
+    }
+
+    public final boolean isPresent(IUnmarshallingContext arg1)
+        throws JiBXException
+    {
+        return arg1.isAt("http://www.opentravel.org/OTA/2003/05", "TimeSpan");
+    }
+
+    public final Object unmarshal(Object arg1, IUnmarshallingContext arg2)
+        throws JiBXException
+    {
+        if(arg1 == null)
+            arg1 = TimeSpan.JiBX_message_newinstance_2_0(null, (UnmarshallingContext)arg2);
+        ((UnmarshallingContext)arg2).parseToStartTag("http://www.opentravel.org/OTA/2003/05", "TimeSpan");
+        ((UnmarshallingContext)arg2).parsePastStartTag("http://www.opentravel.org/OTA/2003/05", "TimeSpan");
+        ((UnmarshallingContext)arg2).parsePastCurrentEndTag("http://www.opentravel.org/OTA/2003/05", "TimeSpan");
+        return TimeSpan.JiBX_message_unmarshalAttr_2_0((TimeSpan)arg1, (UnmarshallingContext)arg2);
+    }
+
+    public final void marshal(Object arg1, IMarshallingContext arg2)
+        throws JiBXException
+    {
+        arg2.pushNamespaces("com.derby.dswitch.adapter.ihg.model.common.JiBX_messageFactory");
+        ((MarshallingContext)arg2).startTagNamespaces(3, "TimeSpan", new int[] {
+            3
+        }, new String[] {
+            ""
+        });
+        TimeSpan.JiBX_message_marshalAttr_2_0((TimeSpan)arg1, (MarshallingContext)arg2);
+        ((MarshallingContext)arg2).closeStartEmpty();
+        arg2.popNamespaces();
+    }
+
+    public final boolean isExtension(String arg1)
+    {
+        return arg1.equals("com.derby.dswitch.adapter.ihg.model.common.TimeSpan");
+    }
+}

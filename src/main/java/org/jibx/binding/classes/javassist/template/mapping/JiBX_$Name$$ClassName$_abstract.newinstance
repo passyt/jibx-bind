@@ -1,0 +1,6 @@
+public static $className$ $newinstanceMethodName$($className$ object, org.jibx.runtime.IUnmarshallingContext context) throws JiBXException{
+    if(object == null) {
+        throw new JiBXException("Cannot create instance of interface or abstract class $className$");
+    }
+    return object;
+}

@@ -1,0 +1,652 @@
+<binding>
+	<namespace uri="http://www.opentravel.org/OTA/2003/05" default="elements" />
+	
+	<format type="org.joda.time.LocalDate" 
+		serializer="com.derby.dswitch.adapter.ihg.model.LocalDates.format"
+		deserializer="com.derby.dswitch.adapter.ihg.model.LocalDates.parse" />
+	
+	<format type="org.joda.time.LocalDate" 
+		label="expireDateFormat" 
+		serializer="com.derby.dswitch.adapter.ihg.model.ExpireDates.format" 
+		deserializer="com.derby.dswitch.adapter.ihg.model.ExpireDates.parse" />
+	
+	<format type="org.joda.time.LocalDateTime"
+		label="absoluteDeadlineFormat"
+		serializer="com.derby.dswitch.adapter.ihg.model.AbsoluteDeadlines.format"
+		deserializer="com.derby.dswitch.adapter.ihg.model.AbsoluteDeadlines.parse"/>
+	
+	<format type="org.joda.time.LocalDateTime"
+		label="deadlineFormat"
+		serializer="com.derby.dswitch.adapter.ihg.model.Deadlines.format"
+		deserializer="com.derby.dswitch.adapter.ihg.model.Deadlines.parse"/>
+	
+	<format type="org.joda.time.LocalDateTime"
+		label="effectiveDateFormat"						
+		serializer="com.derby.dswitch.adapter.ihg.model.EffectiveDates.format"
+		deserializer="com.derby.dswitch.adapter.ihg.model.EffectiveDates.parse">
+		
+	</format>
+	
+	<mapping abstract="true"
+		class="com.derby.dswitch.adapter.ihg.model.Fault">
+		<value name="Type" field="type" style="attribute" usage="optional"/>
+		<value name="Code" field="code" style="attribute" usage="optional" />
+		<value name="Language" field="language" style="attribute" usage="optional"/>
+		<value name="ShortText" field="shortText" style="attribute" usage="optional"/>
+		<value name="Status" field="status" style="attribute" usage="optional"/>
+	</mapping>
+	
+	<mapping name="Warning" 
+		class="com.derby.dswitch.adapter.ihg.model.Warning"
+		extends="com.derby.dswitch.adapter.ihg.model.Fault">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Fault" />
+	</mapping>
+	
+	<mapping name="Error" 
+		class="com.derby.dswitch.adapter.ihg.model.Error"
+		extends="com.derby.dswitch.adapter.ihg.model.Fault">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Fault" />
+	</mapping>
+	
+	<mapping abstract="true" class="com.derby.dswitch.adapter.ihg.model.Message">
+		<value name="xmlns:xsi" constant="http://www.w3.org/2001/XMLSchema-instance" style="attribute" usage="optional" />
+		<value name="Version" field="version" style="attribute" />
+		<value name="ResResponseType" field="resResponseType" style="attribute" usage="optional"></value>
+		<value name="ResStatus" field="resStatus" style="attribute" usage="optional"></value>
+		<value name="TransactionStatusCode" field="transactionStatusCode" style="attribute" usage="optional" />
+		<value name="TransactionIdentifier" field="transactionIdentifier" style="attribute" usage="optional" />
+		<structure field="requestorId" usage="optional"/>
+	</mapping>
+	
+	<mapping abstract="true" class="com.derby.dswitch.adapter.ihg.model.Request">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Message" />
+	</mapping>
+	
+	<mapping abstract="true" class="com.derby.dswitch.adapter.ihg.model.Response">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Message" />
+		<value name="Success" get-method="getSuccess" set-method="setSuccess" usage="optional" />
+		<collection name="Warnings" 
+			field="warnings" 
+			item-type="com.derby.dswitch.adapter.ihg.model.Warning" 
+			factory="org.jibx.runtime.Utility.arrayListFactory"
+			usage="optional" />
+		<collection name="Errors" 
+			field="errors" 
+			item-type="com.derby.dswitch.adapter.ihg.model.Error" 
+			factory="org.jibx.runtime.Utility.arrayListFactory"
+			usage="optional" />
+	</mapping>
+	
+	<mapping 
+		name="POS" 
+		class="com.derby.dswitch.adapter.ihg.model.RequestorId">
+		<structure name="Source" usage="optional">
+			<structure name="RequestorID" usage="optional">
+				<value name="URL" field="url" style="attribute" usage="optional" />
+				<value name="Type" field="type" style="attribute" usage="optional" />
+				<value name="ID" field="id" style="attribute" usage="optional" />
+				<value name="Instance" field="instance" style="attribute" usage="optional" />
+				<structure field="companyName" usage="optional" />
+			</structure>
+		</structure>
+	</mapping>
+	<mapping 
+		name="CompanyName" 
+		class="com.derby.dswitch.adapter.ihg.model.CompanyName">
+		<value name="CompanyShortName" field="shortName" style="attribute" usage="optional" />
+		<value style="text" field="name" usage="optional" />
+	</mapping>
+	
+	<!-- OTA RAC Model the cancel object is the same as RAD Model-->
+	<mapping
+		name="OTA_HotelResRQ"
+		class="com.derby.dswitch.adapter.ihg.model.HotelReservationRequest"
+		extends="com.derby.dswitch.adapter.ihg.model.Request">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Request" />
+		<value name="xsi:schemaLocation"
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_HotelResRQ.xsd" style="attribute" usage="optional"></value>
+		<structure name="HotelReservations">
+			<structure name="HotelReservation" field="hotelReservation"></structure>
+		</structure>
+	</mapping>
+	
+	<mapping 
+		name="OTA_HotelResRS" 
+		class="com.derby.dswitch.adapter.ihg.model.HotelReservationResponse"
+		extends="com.derby.dswitch.adapter.ihg.model.Response">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Response"></structure>	
+		<value name="xsi:schemaLocation"
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_HotelResRS.xsd" style="attribute" usage="optional"></value>
+		<structure name="HotelReservations" usage="optional">
+			<structure name="HotelReservation" field="hotelReservation"/>
+		</structure>
+	</mapping>
+	
+	 
+	<mapping 
+		name="OTA_HotelAvailRQ" 
+		class="com.derby.dswitch.adapter.ihg.model.HotelAvailabilityRequest" 
+		extends="com.derby.dswitch.adapter.ihg.model.Request">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Request" />
+		<value name="xsi:schemaLocation" 
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_HotelAvailRQ.xsd" style="attribute" usage="optional" />
+		<structure name="AvailRequestSegments">
+			<structure name="AvailRequestSegment" field="availRequestSegment">
+				<value name="AvailReqType" constant="Room" style="attribute"/>
+				<structure field="stayDateRange" />
+				<collection name="RatePlanCandidates" field="ratePlanCandidates" 
+					item-type="com.derby.dswitch.adapter.ihg.model.availability.RatePlanCandidate" 
+					factory="org.jibx.runtime.Utility.arrayListFactory" />
+				<structure name="RoomStayCandidates">
+					<structure name="RoomStayCandidate">
+						<value name="Quantity" field="quantity" style="attribute" />
+						<structure name="GuestCounts">
+							<value name="IsPerRoom" constant="true" style="attribute"/>
+							<collection field="guestCounts" 
+								item-type="com.derby.dswitch.adapter.ihg.model.common.GuestCount" 
+								factory="org.jibx.runtime.Utility.arrayListFactory"/>
+						</structure>
+					</structure>
+				</structure>
+				<structure name="HotelSearchCriteria">
+					<structure name="Criterion">
+						<structure name="HotelRef">
+							<value name="HotelCode" field="hotelCode" style="attribute"/>
+						</structure>
+					</structure>
+				</structure>
+			</structure>
+		</structure>
+	</mapping>
+	
+	<mapping 
+		name="OTA_HotelAvailRS" 
+		class="com.derby.dswitch.adapter.ihg.model.HotelAvailabilityResponse" 
+		extends="com.derby.dswitch.adapter.ihg.model.Response">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Response" />
+		<value name="xsi:schemaLocation" 
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_HotelAvailRS.xsd" style="attribute" usage="optional" />
+		<structure name="RoomStays" usage="optional">
+			<structure name="RoomStay">
+				<value name="IsAlternate" constant="false" style="attribute" />
+				<structure name="RoomTypes" usage="optional" />
+				<structure name="RatePlans" usage="optional" />
+				<collection name="RoomRates"
+					field="roomRates" 
+					item-type="com.derby.dswitch.adapter.ihg.model.availability.RoomRate" 
+					factory="org.jibx.runtime.Utility.arrayListFactory"
+					usage="optional"/>
+				<structure name="GuestCounts" usage="optional" />
+				<structure field="timeSpan" usage="optional"/>
+				<structure name="BasicPropertyInfo" usage="optional"/>
+			</structure>
+		</structure>
+	</mapping>
+	
+	<mapping 
+		name="RoomRate" 
+		class="com.derby.dswitch.adapter.ihg.model.availability.RoomRate">
+		<value name="RoomTypeCode" field="rateCategory" style="attribute" />
+		<value name="RatePlanCode" field="ratePlanCode" style="attribute" />
+		<value name="NumberOfUnits" field="numberOfUnits" style="attribute" usage="optional" />
+		<structure name="Rates">
+			<structure field="rate" />
+		</structure>
+		<structure name="RoomRateDescription" usage="optional"/>
+	</mapping>
+	
+	<mapping 
+		name="Rate" 
+		class="com.derby.dswitch.adapter.ihg.model.availability.Rate">
+		<value name="AgeQualifyingCode" field="ageQualifyingCode" style="attribute" />
+		<value name="MaxGuestApplicable" field="maxGuestApplicable" style="attribute" usage="optional" />
+		<structure name="Base" field="amount" />
+		<structure name="AdditionalGuestAmounts" usage="optional">
+			<structure field="additionalGuestAmount" />
+		</structure>
+		<structure name="Fees" usage="optional">
+			<collection
+				field="fees" 
+				item-type="com.derby.dswitch.adapter.ihg.model.availability.Fee" 
+				factory="org.jibx.runtime.Utility.arrayListFactory" />
+		</structure>
+		<structure name="CancelPolicies" usage="optional">
+			<structure field="cancelPenalty"/>
+		</structure>
+		<structure name="PaymentPolicies" usage="optional"/>
+		<structure name="Total" usage="optional">
+			<structure name="Taxes" usage="optional">
+				<collection
+					field="taxes"
+					item-type="com.derby.dswitch.adapter.ihg.model.availability.Tax"
+					factory="org.jibx.runtime.Utility.arrayListFactory">	
+				</collection>
+			</structure>
+		</structure>
+		<structure name="RateDescription" usage="optional"/>
+		<structure name="TPA_Extensions">
+			<collection
+			field="rateChangeInfoList" 
+			item-type="com.derby.dswitch.adapter.ihg.model.availability.RateChangeInfo" 
+			factory="org.jibx.runtime.Utility.arrayListFactory"/>
+			<value name="MaxOccupancy" field="maxOccupancy"/>
+			<structure name="MealsIncluded" usage="optional"/>
+			<structure name="ExtraPerChargeStart" usage="optional"/>
+            <structure name="AdvBkRule" usage="optional"/>
+            
+            <collection field="cxlBasisTypes" factory="org.jibx.runtime.Utility.arrayListFactory" usage="optional">
+            	<structure name="CxlBasisType" type="com.derby.dswitch.adapter.ihg.model.availability.CxlBasisType" usage="optional" />
+			</collection>
+			
+            <!-- <structure name="CxlBasisType" field="cxlBasisType" usage="optional"></structure> -->
+            <structure name="DepositPolicy" usage="optional" />
+		</structure>
+		<structure name="RoomRateDescription" usage="optional"/>
+	</mapping>
+	
+	<mapping 
+		name="Fee"
+		class="com.derby.dswitch.adapter.ihg.model.availability.Fee">
+		<value name="TaxInclusive" field="taxInclusive" style="attribute" />
+		<value name="Type" field="type" style="attribute" />
+		<value name="Amount" field="amount" style="attribute" usage="optional"/>
+		<value name="Percent" field="percent" style="attribute" usage="optional"/>
+		<structure name="Description" usage="optional"/>
+	</mapping>
+	
+	<mapping 
+		name="Tax"
+		class="com.derby.dswitch.adapter.ihg.model.availability.Tax">
+		<value name="Code" field="code" style="attribute"></value>	
+		<value name="Amount" field="amount" style="attribute"></value>	
+		<structure name="TaxDescription">
+			<value name="Text" field="taxDescription" />
+		</structure>
+	</mapping>
+	
+	<mapping 
+		name="CancelPenalty"
+		class="com.derby.dswitch.adapter.ihg.model.availability.CancelPolicy">
+		<structure name="Deadline" field="deadline" usage="optional"></structure>
+		<structure name="PenaltyDescription" usage="optional">
+			<value name="Text" field="penaltyDescription"></value>
+		</structure>
+	</mapping>
+	
+	<mapping 
+		abstract="true"
+		class="com.derby.dswitch.adapter.ihg.model.availability.Deadline">
+		<value name="OffsetUnitMultiplier" field="offsetUnitMultiplier" style="attribute" usage="optional"></value>
+		<value name="OffsetTimeUnit" field="offsetTimeUnit" style="attribute" usage="optional"></value>
+		<value name="AbsoluteDeadline" field="absoluteDeadline" format="deadlineFormat" style="attribute" usage="optional"></value>
+	</mapping>
+	
+	<mapping 
+		name="RateChangeInfo"
+		class="com.derby.dswitch.adapter.ihg.model.availability.RateChangeInfo">
+		<value name="RateChange" field="rateChangeText" set-method="setRateChangeText"/>
+		<value name="EffectivePeriod" field="effectivePeriodText" set-method="setEffectivePeriodText"/>
+	</mapping>
+	
+	<mapping 
+		abstract="true"
+		class="com.derby.dswitch.adapter.ihg.model.availability.CxlBasisType">
+		<value name="Policy" field="policy" style="attribute" />
+		<value field="text" style="text"></value>
+	</mapping>
+	
+	<mapping 
+		name="AdditionalGuestAmount"
+		class="com.derby.dswitch.adapter.ihg.model.availability.AdditionalGuestAmount">
+		<structure name="Amount" field="amount" />
+	</mapping>
+	
+	<mapping 
+		abstract="true"
+		class="com.derby.dswitch.adapter.ihg.model.availability.Amount">
+		<value name="AmountBeforeTax" field="value" style="attribute" />
+		<value name="CurrencyCode" field="currencyCode" style="attribute" />
+	</mapping>
+	
+	<mapping 
+		name="RatePlanCandidate" 
+		class="com.derby.dswitch.adapter.ihg.model.availability.RatePlanCandidate">
+		<value name="RatePlanCode" field="ratePlanCode" style="attribute" />
+	</mapping>
+	
+	<mapping 
+		name="StayDateRange" 
+		class="com.derby.dswitch.adapter.ihg.model.availability.StayDateRange">
+		<value name="Start" field="start" style="attribute" />
+		<value name="End" field="end" style="attribute" />
+	</mapping>
+	 
+	
+	<!-- OTA RAC MODEL-->
+	
+	<mapping 
+		name="OTA_HotelResNotifRQ" 
+		class="com.derby.dswitch.adapter.ihg.model.HotelReservationNotifyRequest" 
+		extends="com.derby.dswitch.adapter.ihg.model.Request">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Request" />
+		<value name="xsi:schemaLocation" 
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_HotelResNotifRQ.xsd" style="attribute" usage="optional" />
+		<structure name="HotelReservations">
+			<structure name="HotelReservation" field="hotelReservation"/>
+		</structure>
+	</mapping>
+	<mapping 
+		name="OTA_HotelResNotifRS" 
+		class="com.derby.dswitch.adapter.ihg.model.HotelReservationNotifyResponse" 
+		extends="com.derby.dswitch.adapter.ihg.model.Response">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Response" />
+		<value name="xsi:schemaLocation" 
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_HotelResNotifRS.xsd" style="attribute" usage="optional" />
+		<structure name="HotelReservations" usage="optional">
+			<structure name="HotelReservation" field="hotelReservation"/>
+		</structure>
+	</mapping>
+	<mapping 
+		name="OTA_HotelResModifyNotifRQ" 
+		class="com.derby.dswitch.adapter.ihg.model.HotelReservationModifyNotifyRequest" 
+		extends="com.derby.dswitch.adapter.ihg.model.Request">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Request" />
+		<value name="xsi:schemaLocation" 
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_HotelResModifyNotifRQ.xsd" style="attribute" usage="optional" />
+		<structure name="HotelResModifies">
+			<structure name="HotelResModify" field="hotelReservation"/>
+		</structure>
+	</mapping>
+	<mapping 
+		name="OTA_HotelResModifyNotifRS" 
+		class="com.derby.dswitch.adapter.ihg.model.HotelReservationModifyNotifyResponse" 
+		extends="com.derby.dswitch.adapter.ihg.model.Response">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Response" />
+		<value name="xsi:schemaLocation" 
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_HotelResNotifRS.xsd" style="attribute" usage="optional" />
+		<structure name="HotelResModifies" usage="optional">
+			<structure name="HotelResModify" field="hotelReservation"/>
+		</structure>
+	</mapping>
+	<mapping 
+		name="OTA_CancelRQ" 
+		class="com.derby.dswitch.adapter.ihg.model.CancelRequest" 
+		extends="com.derby.dswitch.adapter.ihg.model.Request">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Request" />
+		<value name="CancelType" 
+			constant="Cancel" style="attribute" usage="optional" />
+		<value name="xsi:schemaLocation" 
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_CancelRQ.xsd" style="attribute" usage="optional" />
+		<collection
+			field="uniqueIds" 
+			item-type="com.derby.dswitch.adapter.ihg.model.reservation.UniqueId" 
+			factory="org.jibx.runtime.Utility.arrayListFactory"/>
+	</mapping>
+	<mapping 
+		name="OTA_CancelRS" 
+		class="com.derby.dswitch.adapter.ihg.model.CancelResponse" 
+		extends="com.derby.dswitch.adapter.ihg.model.Response">
+		<structure map-as="com.derby.dswitch.adapter.ihg.model.Response" />
+		<value name="xsi:schemaLocation" 
+			constant="http://www.opentravel.org/OTA/2003/05 OTA_CancelRS.xsd" style="attribute" usage="optional" />
+		<collection
+			field="uniqueIds" 
+			item-type="com.derby.dswitch.adapter.ihg.model.reservation.UniqueId" 
+			factory="org.jibx.runtime.Utility.arrayListFactory"
+			usage="optional" />
+		<structure name="CancelInfoRS" usage="optional">
+			<structure field="cancellationId" />
+		</structure>
+	</mapping>
+	
+	<mapping 
+		name="GuestCount" 
+		class="com.derby.dswitch.adapter.ihg.model.common.GuestCount">
+		<value name="Count" field="count" style="attribute" />
+		<value name="AgeQualifyingCode" field="ageQualifyingCode" style="attribute" />
+	</mapping>
+	<mapping 
+		name="UniqueID" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.UniqueId">
+		<value name="Type" field="type" style="attribute" />
+		<value name="ID" field="id" style="attribute" />
+		<value name="Instance" field="instance" style="attribute" usage="optional"/>
+		<structure field="companyName" usage="optional" />
+	</mapping>
+	<mapping abstract="true"
+		class="com.derby.dswitch.adapter.ihg.model.reservation.HotelReservation">
+		<value name="RoomStayReservation" constant="true" style="attribute" usage="optional" />
+		<structure field="uniqueId" usage="optional" />
+		<structure name="RoomStays" usage="optional" test-method="checkRoomStay">
+			<structure field="roomStay" usage="optional" />
+		</structure>
+		<structure name="Services" usage="optional" test-method="checkService">
+			<structure field="service" usage="optional" />
+		</structure>
+		<structure name="ResGuests" usage="optional" test-method="checkCustomer">
+			<structure name="ResGuest">
+				<structure name="Profiles">
+					<structure name="ProfileInfo">
+						<structure name="Profile">
+							<structure field="customer" />
+						</structure>
+					</structure>
+				</structure>
+			</structure>
+		</structure>
+		<structure field="globalInfo" usage="optional"/>
+		<structure name="TPA_Extensions" field="tpaExtensions" usage="optional" unmarshaller="com.derby.dswitch.adapter.ihg.model.jibx.TpaExtensionsMapper"
+				marshaller="com.derby.dswitch.adapter.ihg.model.jibx.TpaExtensionsMapper" />
+	</mapping>    
+	
+	<mapping name="ResponseType" class="com.derby.dswitch.adapter.ihg.model.reservation.ResponseType">
+		<value name="Response" field="type" />
+	</mapping>
+	
+	<mapping name="Service"
+			 class="com.derby.dswitch.adapter.ihg.model.reservation.Service">
+			 <value name="RatePlanCode" field="ratePlanCode" style="attribute" usage="optional"></value>
+			 <structure name="Price" usage="optional">
+			 	<value name="EffectiveDate" field="effectiveDate" style="attribute" format="effectiveDateFormat" usage="optional"></value>
+			 	<value name="ExpireDate" field="expireDate" style="attribute" format="effectiveDateFormat" usage="optional"></value>
+			 	<value name="AgeQualifyingCode" field="ageQualifyingCode" style="attribute" usage="optional"></value>
+			 	<value name="NumberOfUnits" field="numberOfUnits" style="attribute" usage="optional"></value>
+			 	<structure name="Base" usage="optional">
+			 		<value name="AmountBeforeTax" field="amountBeforeTax" style="attribute" usage="optional"></value>
+			 		<value name="AmountAfterTax" field="amountAfterTax" style="attribute" usage="optional"></value>
+			 		<value name="CurrencyCode" field="currencyCode" style="attribute" usage="optional"></value>
+			 		<structure name="Taxes" usage="optional">
+			 			<value name="Amount" field="amount" style="attribute" usage="optional"></value>
+			 			<structure name="Tax" usage="optional">
+			 				<value name="Percent" field="percent" style="attribute" usage="optional"></value>
+			 				<structure name="TaxDescription" usage="optional">
+			 					<value name="Text" field="taxDescription" usage="optional"></value>
+			 				</structure>
+			 			</structure>
+			 		</structure>
+			 	</structure>
+			 	<structure name="CancelPolicies" usage="optional">
+			 	</structure>
+			 </structure>
+	</mapping>
+	
+	<mapping 
+		name="ResGlobalInfo" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.GlobalInfo">
+		<structure field="guarantee" usage="optional" />
+		<structure name="HotelReservationIDs" usage="optional">
+			<structure field="hotelReservationId" usage="optional"/>
+		</structure>
+	</mapping>
+	<mapping 
+		name="Guarantee" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.Guarantee">
+		<value name="GuaranteeCode" constant="GX" style="attribute" usage="optional" />
+		<structure field="guaranteesAccepted" usage="optional" />
+	</mapping>
+	<mapping 
+		name="GuaranteesAccepted" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.GuaranteesAccepted">
+			<structure name="GuaranteeAccepted">
+				<structure field="paymentCard" />
+			</structure>
+	</mapping>
+	<mapping 
+		name="HotelReservationID" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.HotelReservationId">
+		<value name="ResID_Type" field="type" style="attribute" />
+		<value name="ResID_Value" field="value" style="attribute" />
+		<value name="ForGuest" constant="false" style="attribute" usage="optional" />
+	</mapping>
+	<mapping 
+		name="Customer" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.Customer">
+		<structure name="PersonName">
+			<value name="GivenName" field="givenName" />
+			<value name="Surname" field="surname" />
+		</structure>
+		<structure name="Telephone">
+			<value name="PhoneNumber" field="telephone" style="attribute" />
+		</structure>
+		<value name="Email" field="email" usage="optional" />
+		<structure field="address" usage="optional" />
+		<structure field="paymentForm" usage="optional" />
+		<collection field="relatedTravelers" factory="org.jibx.runtime.Utility.arrayListFactory" usage="optional" />
+	</mapping>
+	<mapping name="RelatedTraveler" class="com.derby.dswitch.adapter.ihg.model.reservation.RelatedTraveler">
+		<structure name="PersonName">
+			<value name="GivenName" field="givenName" />
+			<value name="Surname" field="surname" />
+		</structure>
+	</mapping>
+	<mapping 
+		name="Address" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.Address">
+		<value name="AddressLine" field="addressLine" usage="optional" />
+		<value name="CityName" field="cityName" usage="optional" />
+		<value name="PostalCode" field="postalCode" usage="optional" />
+		<structure name="CountryName">
+			<value name="Code" field="countryCode" style="attribute" usage="optional"/>
+		</structure>
+	</mapping>
+	<mapping 
+		name="PaymentForm" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.PaymentForm">
+		<structure field="paymentCard" usage="optional" />
+	</mapping>
+	<mapping 
+		name="PaymentCard" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.PaymentCard">
+		<value name="ExpireDate" field="expireDate" format="expireDateFormat" style="attribute" />
+		<value name="CardNumber" field="cardNumber" style="attribute" />
+		<value name="CardCode" field="cardCode" style="attribute" />
+		<value name="CardHolderName" field="holderName" usage="optional"/>
+	</mapping>
+	<mapping 
+		name="RoomStay" 
+		class="com.derby.dswitch.adapter.ihg.model.reservation.RoomStay">
+		<structure name="RoomTypes">
+			<structure name="RoomType">
+				<structure name="RoomDescription" usage="optional" test-method="checkRoomDescription">
+					<value name="Text" field="roomDescription" usage="optional"></value>
+				</structure>
+				 
+				<collection name="AdditionalDetails"
+					field="additionalDetails"
+					item-type="com.derby.dswitch.adapter.ihg.model.common.AdditionalDetail"
+					factory="org.jibx.runtime.Utility.arrayListFactory" usage="optional"/>
+				
+				
+				<value name="NumberOfUnits" field="numberOfUnits" style="attribute" />
+				<value name="RoomTypeCode" field="rateCategory" style="attribute" />
+			</structure>
+		</structure>
+		
+		<structure name="RatePlans" usage="optional"/>
+		
+		<structure name="RoomRates" usage="optional" test-method="hasRates">
+			<structure name="RoomRate" usage="optional">
+				<value name="NumberOfUnits" get-method="getNumberOfUnits" set-method="setNumberOfUnits" style="attribute" usage="optional"/>
+				<collection name="Rates" 
+				field="rates" 
+				item-type="com.derby.dswitch.adapter.ihg.model.reservation.Rate"
+				factory="org.jibx.runtime.Utility.arrayListFactory" usage="optional">
+					<structure name="Rate" class="com.derby.dswitch.adapter.ihg.model.reservation.Rate">
+						<value name="EffectiveDate" field="effectiveDate" style="attribute" />
+						<value name="ExpireDate" field="expireDate" style="attribute" />
+						<structure name="Base">
+							<value name="AmountAfterTax" field="amountAfterTax" style="attribute" usage="optional" />
+							<value name="AmountBeforeTax" field="amountBeforeTax" style="attribute" usage="optional" />
+							<value name="CurrencyCode" field="currencyCode" style="attribute" />
+						</structure>
+					</structure>
+				</collection>
+			</structure>
+		</structure>
+		
+		<structure name="GuestCounts">
+			<value name="IsPerRoom" constant="false" style="attribute" usage="optional" />
+			<collection field="guestCounts" 
+				item-type="com.derby.dswitch.adapter.ihg.model.common.GuestCount" 
+				factory="org.jibx.runtime.Utility.arrayListFactory"/>
+		</structure>
+		
+		<structure field="timeSpan" />
+		
+		<structure name="Guarantee">
+			<value name="GuaranteeCode" constant="GX" style="attribute" usage="optional" />
+			<!--<value name="GuaranteeCode" field="guaranteeCode" style="attribute" usage="optional" />-->
+		</structure>
+		<structure field="basicPropertyInfo" />
+		<collection name="Comments"
+			field="comments" usage="optional" factory="org.jibx.runtime.Utility.arrayListFactory">
+			<structure name="Comment" usage="optional">
+				<value name="Text" type="java.lang.String" usage="optional"/>
+			</structure>
+		</collection>
+		<collection name="SpecialRequests" 
+			field="specialRequests" usage="optional" factory="org.jibx.runtime.Utility.arrayListFactory">
+			<structure name="SpecialRequest" usage="optional">
+				<value name="Text" type="java.lang.String" usage="optional"/>
+			</structure>			
+		</collection>
+	</mapping>
+	
+	<mapping 
+		name="AdditionalDetail"
+		class="com.derby.dswitch.adapter.ihg.model.common.AdditionalDetail">
+		<value name="Type" field="type" style="attribute" usage="optional" />
+		<value name="Code" field="code" style="attribute" usage="optional" />
+		<structure name="DetailDescription">
+			<value name="Text" field="text" usage="optional"></value>
+		</structure>
+	</mapping>
+	
+	<!--<mapping -->
+		<!--name="Rate" -->
+		<!--class="com.derby.dswitch.adapter.ihg.model.reservation.Rate">-->
+		<!--<value name="EffectiveDate" field="effectiveDate" style="attribute" />-->
+		<!--<value name="ExpireDate" field="expireDate" style="attribute" />-->
+		<!--<structure name="Base">-->
+			<!--<value name="AmountAfterTax" field="amountAfterTax" style="attribute" usage="optional" />-->
+			<!--<value name="AmountBeforeTax" field="amountBeforeTax" style="attribute" usage="optional" />-->
+			<!--<value name="CurrencyCode" field="currencyCode" style="attribute" />-->
+		<!--</structure>-->
+	<!--</mapping>-->
+	<mapping 
+		name="BasicPropertyInfo" 
+		class="com.derby.dswitch.adapter.ihg.model.common.BasicPropertyInfo">
+		<value name="HotelCode" field="hotelCode" style="attribute" />
+		<value name="HotelName" field="hotelName" style="attribute" usage="optional"/>
+		<structure name="Address" usage="optional" />
+		<structure name="VendorMessages" usage="optional" />
+		<structure name="ContactNumbers" usage="optional" />
+	</mapping>
+	<mapping 
+		name="TimeSpan" 
+		class="com.derby.dswitch.adapter.ihg.model.common.TimeSpan">
+		<value name="Start" field="start" style="attribute" />
+		<value name="End" field="end" style="attribute" />
+	</mapping>
+	
+</binding>

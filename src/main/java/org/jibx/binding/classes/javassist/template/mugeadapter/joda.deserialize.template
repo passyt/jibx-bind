@@ -1,0 +1,12 @@
+if("org.joda.time.LocalDate".equals(type)){
+	return new org.joda.time.LocalDate(object);
+}
+if("org.joda.time.LocalDateTime".equals(type)){
+	return new org.joda.time.LocalDateTime(object);
+}
+if("org.joda.time.DateTime".equals(type)){
+	return new org.joda.time.DateTime(object);
+}
+if("org.joda.time.LocalTime".equals(type)){
+	return new org.joda.time.LocalTime(object);
+}

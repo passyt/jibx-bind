@@ -1,0 +1,1 @@
+String $constantVariable$ = context.parseElementText($uri$, $attributeName$);

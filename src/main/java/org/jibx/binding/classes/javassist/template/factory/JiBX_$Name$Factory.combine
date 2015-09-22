@@ -1,0 +1,13 @@
+private static String combine(int[] indexes, int step) {
+	StringBuilder builder = new StringBuilder();
+	for (int i = 0; i < indexes.length; i++) {
+		int nsIndex = indexes[i];
+		if (nsIndex == 0) {
+			builder.append((char) 1);
+		} else {
+			builder.append((char) (nsIndex + step));
+		}
+	}
+
+	return builder.toString();
+}

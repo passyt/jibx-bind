@@ -1,0 +1,3 @@
+public void unmarshal(IUnmarshallingContext context) throws JiBXException {
+    context.getUnmarshaller("$className$").unmarshal(this, context);
+}

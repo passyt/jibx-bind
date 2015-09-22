@@ -1,0 +1,40 @@
+<binding name="message">
+
+	<namespace uri="http://test/" default="elements" />
+	<namespace uri="http://www/" prefix="b" />
+
+	<mapping abstract="true" class="org.jibx.binding.test4.Mapping">
+		<value name="Version" field="version" usage="optional" />
+	</mapping>
+
+	<mapping name="Test" class="org.jibx.binding.test4.TestMapping" ns="http://test.1/">
+		<namespace uri="http://test.1/" prefix="a" />
+		<structure map-as="org.jibx.binding.test4.Mapping" />
+		<value name="Name" field="name" usage="optional" style="attribute" />
+		<structure name="Code">
+			<value name="Value" field="value" usage="optional" />
+			<value name="Age" field="age" usage="optional" />
+		</structure>
+		<collection name="List1" field="list1" create-type="java.util.List"
+			factory="org.jibx.runtime.Utility.arrayListFactory" usage="optional">
+			<structure name="Test">
+				<value name="Code" type="java.lang.String" />
+			</structure>
+		</collection>
+		<collection name="List2" field="list2" create-type="java.util.List"
+			factory="org.jibx.runtime.Utility.arrayListFactory" usage="optional">
+			<structure name="Test">
+				<value name="Code" type="java.lang.String" style="attribute" />
+			</structure>
+		</collection>
+		<collection name="List3" field="list3" create-type="java.util.List"
+			factory="org.jibx.runtime.Utility.arrayListFactory" item-type="org.jibx.binding.test4.Item"
+			usage="optional">
+			<structure name="Item">
+				<value name="Code" field="code" style="attribute" />
+				<value name="Name" field="name" style="attribute" />
+			</structure>
+		</collection>
+	</mapping>
+
+</binding>

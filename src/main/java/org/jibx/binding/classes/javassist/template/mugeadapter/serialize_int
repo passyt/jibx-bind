@@ -1,0 +1,3 @@
+public static String serialize(int object) {
+	return serialize(Integer.valueOf(object));
+}

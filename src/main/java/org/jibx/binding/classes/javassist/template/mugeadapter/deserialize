@@ -1,0 +1,59 @@
+public static Object deserialize(String object, String type) {
+	if(object == null){
+		if("int".equals(type)){
+			return Integer.valueOf(0);
+		}else if("double".equals(type)){
+			return Double.valueOf(0D);
+		}else if("long".equals(type)){
+			return Long.valueOf(0L);
+		}else if("float".equals(type)){
+			return Float.valueOf(0F);
+		}else if("char".equals(type)){
+			return Character.valueOf(' ');
+		}else if("boolean".equals(type)){
+			return Boolean.valueOf(false);
+		}
+		return null;
+	}
+	
+	if("java.lang.String".equals(type)){
+		return object;
+	}
+	
+	$CodeBody$
+	
+	if("java.math.BigDecimal".equals(type)){
+		return new java.math.BigDecimal(object);
+	}
+	if("java.lang.Integer".equals(type) || "int".equals(type)){
+		return Integer.valueOf(object);
+	}
+	if("java.lang.Double".equals(type) || "double".equals(type)){
+		return Double.valueOf(object);
+	}
+	if("java.lang.Long".equals(type) || "long".equals(type)){
+		return Long.valueOf(object);
+	}
+	if("java.lang.Float".equals(type) || "float".equals(type)){
+		return Float.valueOf(object);
+	}
+	if("java.lang.Boolean".equals(type) || "boolean".equals(type)){
+		return Boolean.valueOf(object);
+	}
+	/*
+	if("java.lang.Character".equals(type) || "char".equals(type)){
+		return Character.valueOf(object);
+	}
+	*/
+	
+	if("java.util.Date".equals(type)){
+		return new java.util.Date(object);
+	}
+	if("java.math.BigInteger".equals(type)){
+		return new java.math.BigInteger(object);
+	}
+	
+	$ExtendCode$
+	
+	return defaultDeserialize(object, type);
+}

@@ -1,0 +1,5 @@
+public final void marshal(Object object, IMarshallingContext context) throws JiBXException {
+    context.pushNamespaces("$factoryClassName$");
+    $CodeBody$
+    context.popNamespaces();
+}
